@@ -1,4 +1,7 @@
 /***
+$1400
+Math
+
 This cp problem is easier to solve if thinking backwards:
 so the end scenorio is that every number is the same after choosing a random one
 this means that 1. if sum of numbers are conserved then every number should be equal
