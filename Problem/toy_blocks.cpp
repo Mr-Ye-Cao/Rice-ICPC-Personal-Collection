@@ -1,3 +1,20 @@
+/***
+This cp problem is easier to solve if thinking backwards:
+so the end scenorio is that every number is the same after choosing a random one
+this means that 1. if sum of numbers are conserved then every number should be equal
+to the average of mean over (n-1). On the other hand, if there is a maximum number
+then all number should at least be equal to this number.
+
+The difference between the sum of previous scenorio and one of the two scenorios is least
+number added.
+
+Thinking backwards of the end scenorio will eliminate the process of thinking about the 
+process of how exactly the numbers are distributed which is way more complicated and irrelevant
+to this question.
+***/
+
+
+
 #ifndef _GLIBCXX_NO_ASSERT
 #include <cassert>
 #endif
