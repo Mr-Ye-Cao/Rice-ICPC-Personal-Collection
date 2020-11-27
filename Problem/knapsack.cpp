@@ -2,6 +2,7 @@
   $1300 Math Logic
   https://codeforces.com/problemset/problem/1446/A
   Requires a bit math to think through the greedy part
+  There was a small bug reading input. I have to finish reading input before ouputing the answer so as not to influence further tests.
 ***/
 
 #ifndef _GLIBCXX_NO_ASSERT
@@ -96,55 +97,58 @@ int main() {
 	int t;
 	cin>>t;
 	while(t--){
-		bool foun=false;
+		bool f=false;
 		int n;
 		long long int w;
 		cin>>n>>w;
-		vector<pair<long long int,int> > nums; 
+		vector<pair<long long int, int> > num;
 		for(int i=1;i<=n;i++){
-			long long int temp;
-			cin>>temp;
-			if(temp<=w){
-				nums.push_back(make_pair(temp, i));
-			}
-			if(temp<=w&&temp>=(w+1)/2){
-				cout<<"1"<<endl;
-				cout<<i<<endl;
-				foun=true;
-				break;
+			long long int tem;
+			cin>>tem;
+			if(tem<=w){
+				num.push_back(make_pair(tem, i));
 			}
 		}
-		if(foun)
-			continue;
 
-		long long int has=0;
-		long long int goal=(w+1)/2;
-		vector<int> choice;
-		sort(nums.begin(),nums.end());
-		reverse(nums.begin(),nums.end());
-		while(nums.size()!=0){
-			pair<long long int, int> cu=nums.back();
-			nums.pop_back();
-			choice.push_back(cu.second);
-			has+=cu.first;
-			if(has>=goal&&has<=w){
-				cout<<choice.size()<<endl;
-				for(int cho:choice){
-					cout<<cho<<" ";
-				}
-					cout<<endl;
-					foun=true;
-					break;
-			}
-			if(has>w){
+		for(auto p:num){
+			if(p.first>=(w+1)/2){
+				cout<<"1"<<endl;
+				cout<<p.second<<endl;
+				f=true;
 				break;
 			}
 		}
-		if(foun){
-			continue;
+
+		if(!f){
+			if(num.size()==0){
+				cout<<"-1"<<endl;
+				continue;
+			}
+
+			long long int has=0;
+			long long int goal=(w+1)/2;
+			vector<int> choice;
+			sort(num.begin(),num.end());
+			reverse(num.begin(),num.end());
+			while(num.size()!=0){
+				pair<long long int, int> cu=num.back();
+				num.pop_back();
+				choice.push_back(cu.second);
+				has+=cu.first;
+				if(has>=goal){
+					cout<<choice.size()<<endl;
+					for(int cho:choice){
+						cout<<cho<<" ";
+					}
+						cout<<endl;
+						f=true;
+						break;
+				}
+			}
+			if(!f){
+				cout<<"-1"<<endl;
+			}
 		}
-		cout<<"-1"<<endl;
 	}
-	
 	return 0;
 }
