@@ -8,5 +8,5 @@ The repos consists of two parts:
   Problem solving
  
  For the algorithm learning
-  I will store both the C++ version and the python version
+  I will store both the C++ version and the Python version
     One is more efficient, the other one's syntax is logically easier to understand
