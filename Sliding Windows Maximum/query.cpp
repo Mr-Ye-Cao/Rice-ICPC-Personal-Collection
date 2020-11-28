@@ -1,3 +1,7 @@
+// Geekfor Geeks
+// https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k/#disqus_thread
+
+
 // CPP program for the above approach
 #include <bits/stdc++.h>
 using namespace std;
