@@ -1,5 +1,6 @@
 /***
   $1600 Problem Solving Module_arithmatic
+  https://codeforces.com/problemset/problem/1452/D
   Had I thought more generically and less about how to distribute the radio signal but more on the
   numerical patern of the answer. I would be more likely to solve it.
   As it turned out, the patern is very beautifully a fibbonaci sequence.
