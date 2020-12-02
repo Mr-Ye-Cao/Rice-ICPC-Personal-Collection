@@ -1,6 +1,9 @@
 /***
   $2500 Dp Math Brute Force
   https://codeforces.com/contest/1443/problem/B
+  One take away from this problem is that there are cases where brute force
+  is the only way of solving the problem and normally the input size is a hint.
+  
   The problem is just brutally solved with O(N^2)
   The input size is relatively small(2000)
   which makes brutally solving it possible.
