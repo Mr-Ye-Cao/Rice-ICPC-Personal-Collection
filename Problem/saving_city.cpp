@@ -1,7 +1,7 @@
 /***
   $1300 Dp Math
   https://codeforces.com/contest/1443/problem/B
-  Some bug waiting to be fixed. The majority frame of the code works
+  The bug is fixed: first bug is to transform the string; the second bug is way to calculate the cost of merging.
 ***/
 
 #ifndef _GLIBCXX_NO_ASSERT
@@ -98,44 +98,42 @@ int main() {
 	while(t--){
 		int a,b;
 		cin>>a>>b;
-		string s;
-		cin>>s;
-		size_t found_sta=s.find("1");
-		if(found_sta==string::npos){
-			cout<<"0"<<endl;
-			continue;
-		}
-		size_t found_end=s.find("0",found_sta);
+		string m;
+		cin>>m;
+		
+		long long int cost=0;
+		vector<pair<int,int> > pres;
+		size_t f_s=m.find("1");
+		size_t f_e=m.find("0",f_s);
 
-		vector<pair<int,int> > ones;
-		while(found_sta!=string::npos){
-			found_sta=s.find("1",found_end);
-			found_end=s.find("0",found_sta);
-			if(found_end==string::npos){
-				ones.push_back(make_pair(found_sta,s.size()-1));
+		while(f_s!=string::npos){
+			if(f_e==string::npos){
+				pres.push_back(make_pair(f_s,m.size()-1));
 				break;
 			}
-				ones.push_back(make_pair(found_sta,found_end-1));
+				pres.push_back(make_pair(f_s,f_e-1));
+				f_s=m.find("1",f_e);
+				f_e=m.find("0",f_s);
 		}
 
-
-		long long int cost=0;
-		
-		while(ones.size()!=0){
-			if(ones.size()==1){
+		while(pres.size()!=0){
+			if(pres.size()==1){
 				cost+=a;
-				ones.pop_back();
+				break;
+			}
+			pair<int,int> lo=pres[pres.size()-1];
+			pair<int,int> lt=pres[pres.size()-2];
+
+			if((lo.first-lt.second-1)*b<a){
+				pres[pres.size()-2].second=pres[pres.size()-1].second;
+				pres.pop_back();
+				cost+=(lo.first-lt.second-1)*b;
 			}else{
-				if((ones[ones.size()-1].first-ones[ones.size()-2].second-1)*b<a){
-					ones[ones.size()-2].second=ones[ones.size()-1].second;
-					cost+=b;
-					ones.pop_back();
-				}else{
-					cost+=a;
-					ones.pop_back();
-				}
+				pres.pop_back();
+				cost+=a;
 			}
 		}
+
 
 		cout<<cost<<endl;
 	}
