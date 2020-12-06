@@ -1,7 +1,8 @@
 /***
   $1600
   https://codeforces.com/problemset/problem/1455/D
-  Not figuered out and solved yet. 
+  The subproblem I think is to just always greedily solve the
+  very first conflict. Still some bugs need to be fixed.
 
 ***/
 
@@ -97,42 +98,39 @@ int main() {
 	int t;
 	cin>>t;
 	while(t--){
-		int n,x;
-		bool im=false;
+		int n,x,cost=0;
 		cin>>n>>x;
+
 		vector<int> a(n);
 		for(int i=0;i<n;i++)
 			cin>>a[i];
 		
 		vector<int> c;
-		for(int j=0;j<n-1;j++)
-			if(a[j]>a[j+1]){
-				c.push_back(j+1);
-				break;
-			}
-
-		if(c.size()==0){
-			cout<<"0"<<endl;
-			continue;
-		}
-		
-		for(int i=0;i<n;i++)
-			if(a[i]<x){
+		for(int j=n-1;j>=0;j--)
+			if(a[j]>a[j+1])
+				c.push_back(j);
+			
+		bool imp=false;
+		while(c.size()!=0){
+			int ind=c.back();
+			c.pop_back();
+			vector<int>::iterator low=lower_bound(a.begin(),a.begin()+ind,x);
+			if(low==a.begin()+ind){
 				cout<<"-1"<<endl;
-				im=true;
+				imp=true;
 				break;
+			}else{
+				a.erase(a.begin()+ind);
+				int nex=a[low-a.begin()];
+				a.insert(low,x);
+				x=nex;
+				cost+=(ind-(low-a.begin())-1);
 			}
-		
-		if(im)
-			continue;
-
-
-		int mino=0;
-		for(int i=0;i<c.size();i++){
-			mino+=c[i]+1;
 		}
-
-		cout<<mino<<endl;
+		if(!imp){
+			cout<<cost<<endl;
+		}
 	}
+
 	return 0;
 }
