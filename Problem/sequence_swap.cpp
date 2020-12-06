@@ -106,7 +106,7 @@ int main() {
 			cin>>a[i];
 		
 		vector<int> c;
-		for(int j=n-1;j>=0;j--)
+		for(int j=n-2;j>=0;j--)
 			if(a[j]>a[j+1])
 				c.push_back(j);
 			
@@ -115,17 +115,27 @@ int main() {
 			int ind=c.back();
 			c.pop_back();
 			vector<int>::iterator low=lower_bound(a.begin(),a.begin()+ind,x);
-			if(low==a.begin()+ind){
+			// cout<<"LOW "<<low-a.begin()<<" "<<x<<endl;
+			if(low==a.begin()+ind&&ind!=0&&c.size()!=0){
 				cout<<"-1"<<endl;
 				imp=true;
 				break;
 			}else{
+				if(a[ind+1]<x){
+					cout<<"-1"<<endl;
+					imp=true;
+					break;
+				}
+				int nex=a[ind];
 				a.erase(a.begin()+ind);
-				int nex=a[low-a.begin()];
 				a.insert(low,x);
 				x=nex;
-				cost+=(ind-(low-a.begin())-1);
+				cost+=(ind-(low-a.begin())+1);
 			}
+			// for(int j=0;j<a.size();j++){
+			// 	cout<<a[j]<<" ";
+			// }
+				// cout<<endl;
 		}
 		if(!imp){
 			cout<<cost<<endl;
