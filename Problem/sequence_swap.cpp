@@ -98,55 +98,53 @@
 #endif
 using namespace std;
 
+int solve(){
+	int n,x;
+	cin>>n>>x;
+
+	vector<int> a(n);
+	for(int i=0;i<n;i++)
+		cin>>a[i];
+
+
+	if(is_sorted(a.begin(), a.end()))
+		return 0;
+
+	vector<pair<int,int> > c;
+	for(int j=0;j<n-1;j++)
+		if(a[j]>a[j+1])
+			c.push_back(make_pair(a[j],j));
+
+	sort(c.begin(),c.end());
+
+	if(c[0].first<=x)
+		return -1;
+
+	reverse(c.begin(),c.end());
+
+	int cost=0;
+	while(!c.empty()){
+		pair<int,int> las_con=c.back();
+		c.pop_back();
+		int con_num=las_con.first;
+		int con_ind=las_con.second;
+
+		if(con_num<=x)
+			return -1;
+		
+		
+
+
+	}
+}
+
+
 int main() {
 	ios::sync_with_stdio(false), cin.tie(0);
 	int t;
 	cin>>t;
 	while(t--){
-		int n,x;
-		cin>>n>>x;
-
-		vector<int> a(n);
-		for(int i=0;i<n;i++)
-			cin>>a[i];
-		
-		vector<pair<int,int> > c;
-		for(int j=0;j<n-1;j++)
-			if(a[j]>a[j+1])
-				c.push_back(make_pair(a[j],j));	
-
-		sort(c.begin(),c.end());
-		if(c.size()!=0&&c[0].first<x){
-			cout<<"-1"<<endl;
-			continue;
-		}
-		reverse(c.begin(),c.end());
-
-		int cost=0;
-		bool imp=false;
-		while(c.size()!=0){
-			pair<int,int> f_c=c.back();
-			int con_num=f_c.first;
-			int con_ind=f_c.second;
-			c.pop_back();
-
-			vector<int>::iterator low=lower_bound(a.begin(),a.begin()+con_ind+1,x);
-			//low is to insert x
-			a.erase(a.begin()+con_ind);
-			a.insert(low,x);
-			if(a[con_ind]>a[con_ind+1]){
-				imp=true;
-				cout<<"-1"<<endl;
-				break;
-			}
-			x=con_num;
-			cost+=(a.begin()+con_ind-low)+1;
-		}
-
-		if(!imp)
-			cout<<cost<<endl;
-
+		cout<<solve()<<endl;
 	}
-
 	return 0;
 }
