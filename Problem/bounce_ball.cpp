@@ -95,37 +95,33 @@ typedef long long ll;
 
 ll maxE=1e6;
 
-void solve(){
-	ll n,p,k;
-	cin>>n>>p>>k;
-	string s;
-	cin>>s;
-	ll x,y;
-	cin>>x>>y;
-
-	s="X"+s;
-	ll dp[maxE];
-
-	for(ll i=n;i>=p;i--)
-		dp[i]=dp[i+k]+(s[i]=='1'?0:1);
-		
-	ll cost=LONG_MAX;
-	
-	for(ll j=0;n-j>=p;j++)
-		cost=min(cost,dp[p+j]*x+j*y);
-
-	for(ll i=n;i>=p;i--)
-		dp[i]=0;
-
-	cout<<cost<<endl;
-}
-
 int main() {
 	ios::sync_with_stdio(false), cin.tie(0);
 	int t;
 	cin>>t;
 	while(t--){
-		solve();
+		ll n,p,k;
+		cin>>n>>p>>k;
+		string s;
+		cin>>s;
+		ll x,y;
+		cin>>x>>y;
+
+		s="X"+s;
+		ll dp[maxE];
+
+		for(ll i=n;i>=p;i--)
+			dp[i]=dp[i+k]+(s[i]=='1'?0:1);
+			
+		ll cost=LONG_MAX;
+		
+		for(ll j=0;n-j>=p;j++)
+			cost=min(cost,dp[p+j]*x+j*y);
+
+		for(ll i=n;i>=p;i--)
+			dp[i]=0;
+
+		cout<<cost<<endl;	
 	}
 	return 0;
 }
