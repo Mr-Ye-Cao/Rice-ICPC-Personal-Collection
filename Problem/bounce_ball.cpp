@@ -1,6 +1,7 @@
 /***
   $1400 DP
   https://codeforces.com/problemset/problem/1415/C
+  A faster version is on the way
 ***/
 
 #ifndef _GLIBCXX_NO_ASSERT
@@ -91,7 +92,16 @@
 using namespace std;
 typedef long long ll;
 
-ll maxS=1e5;
+ll cal(ll n,ll st,ll k,const string& s){
+	ll cost=0;
+	while(st<=n){
+		if(s[st]!='1'){
+			cost++;
+		}
+		st+=k;
+	}
+	return cost; 
+}
 
 ll solve(){
 	ll n,p,k;
@@ -101,29 +111,14 @@ ll solve(){
 	s="X"+s;
 	ll x,y;
 	cin>>x>>y;
-	int dp[maxS];
 
-	for(int i=1<=n;i++){
-		dp[i]=x;
-	}
-	
-	vector<int> next;
-	for(int i=1;i<=n;i++){
-		if(s[i]=='1'){
-			dp[i]=0;
-			next.push_back(i);
-		}
+	ll cost=LONG_MAX;
+
+	for(ll i=0;n-i>=p;i++){
+		cost=min(cost,cal(n,p+i,k,s)*x+i*y);
 	}
 
-	for(int j=p;j<=2*p-1;j++){
-		if(j<=n){
-			// dp[j-p]=min(dp[j],);
-		}else{
-			break;
-		}
-	}
-
-	return 1;
+	return cost;
 }
 
 int main() {
