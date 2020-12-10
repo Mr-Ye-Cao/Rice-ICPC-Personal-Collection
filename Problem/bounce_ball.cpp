@@ -1,7 +1,8 @@
 /***
   $1400 DP
   https://codeforces.com/problemset/problem/1415/C
-  A faster version is on the way
+  Instead of directly calculating the cost, we calculate the intermidate dp, resulting in linear time of solving the problem.
+  Don't forget to reset the entry of array to 0 after the calculation to prevent memery reset.
 ***/
 
 #ifndef _GLIBCXX_NO_ASSERT
@@ -92,33 +93,31 @@
 using namespace std;
 typedef long long ll;
 
-ll cal(ll n,ll st,ll k,const string& s){
-	ll cost=0;
-	while(st<=n){
-		if(s[st]!='1'){
-			cost++;
-		}
-		st+=k;
-	}
-	return cost; 
-}
+ll maxE=1e6;
 
-ll solve(){
+void solve(){
 	ll n,p,k;
 	cin>>n>>p>>k;
 	string s;
 	cin>>s;
-	s="X"+s;
 	ll x,y;
 	cin>>x>>y;
 
+	s="X"+s;
+	ll dp[maxE];
+
+	for(ll i=n;i>=p;i--)
+		dp[i]=dp[i+k]+(s[i]=='1'?0:1);
+		
 	ll cost=LONG_MAX;
+	
+	for(ll j=0;n-j>=p;j++)
+		cost=min(cost,dp[p+j]*x+j*y);
 
-	for(ll i=0;n-i>=p;i++){
-		cost=min(cost,cal(n,p+i,k,s)*x+i*y);
-	}
+	for(ll i=n;i>=p;i--)
+		dp[i]=0;
 
-	return cost;
+	cout<<cost<<endl;
 }
 
 int main() {
@@ -126,7 +125,7 @@ int main() {
 	int t;
 	cin>>t;
 	while(t--){
-		cout<<solve()<<endl;
+		solve();
 	}
 	return 0;
 }
