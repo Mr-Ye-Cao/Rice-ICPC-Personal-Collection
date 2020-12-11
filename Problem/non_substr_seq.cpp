@@ -90,67 +90,60 @@
 #endif
 using namespace std;
 typedef long long ll;
-int maxE=1e3;
 
 int main() {
 	ios::sync_with_stdio(false), cin.tie(0);
 	int t;
 	cin>>t;
-	int dp[maxE];
 	while(t--){
 		int n,q;
 		cin>>n>>q;
 		string s;
 		cin>>s;
 		s="X"+s;
-		bool one_f=false,zer_f=false;
-		for(int j=1;j<=n;j++){
-			if(!one_f&&s[j]=='1'){
-				dp[j]=-1;
-				one_f=true;
-			}else if(!zer_f&&s[j]=='0'){
-				dp[j]=-1;
-				zer_f=true;
-			}else if(one_f&&s[j]=='1'){
-				dp[j]=1;
-			}else if(zer_f&&s[j]=='0'){
-				dp[j]=1;
-			}
-		}
-		
-		one_f=false,zer_f=false;
-		for(int j=n;j>=1;j--){
-			if(!one_f&&s[j]=='1'){
-				one_f=true;
-			}else if(!zer_f&&s[j]=='0'){
-				zer_f=true;
-			}else if(one_f&&s[j]=='1'){
-				if(dp[j]==-1){
-					dp[j]=1;
-				}
-			}else if(zer_f&&s[j]=='0'){
-				if(dp[j]==-1){
-					dp[j]=1;
-				}
-			}
-		}
 
-		dp[1]=-1;
-		dp[n]=-1;
+		int ml_one=-1,ml_zero=-1,mr_one=-1,mr_zero=-1;
+
+		for(int i=1;i<=n;i++)
+			if(s[i]=='0'){
+				ml_zero=i;
+				break;
+			}
+		
+		for(int i=n;i>=1;i--)
+			if(s[i]=='0'){
+				mr_zero=i;
+				break;
+			}
+		
+		for(int i=1;i<=n;i++)
+			if(s[i]=='1'){
+				ml_one=i;
+				break;
+			}
+		for(int i=n;i>=1;i--)
+			if(s[i]=='1'){
+				mr_one=i;
+				break;
+			}
 
 		bool fon=false;
 		for(int i=0;i<q;i++){
-			int l,r;
+			int l,r,lind,rind;
 			cin>>l>>r;
-			if(dp[l]==1||dp[r]==1){
-				cout<<"YES"<<endl;
-			}else{
-				cout<<"NO"<<endl;
-			}
-		}
+			if(s[l]=='0')
+				lind=ml_zero;
+			else
+				lind=ml_one;
+			if(s[r]=='0')
+				rind=mr_zero;
+			else
+				rind=mr_one;
 
-		for(int j=n;j>=1;j--){
-			dp[j]=0;
+			if((lind!=-1&&lind<l)||(rind!=-1&&rind>r))
+				cout<<"YES"<<endl;
+			else
+				cout<<"NO"<<endl;
 		}
 	}
 
