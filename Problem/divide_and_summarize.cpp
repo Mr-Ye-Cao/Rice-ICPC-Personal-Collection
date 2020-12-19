@@ -90,22 +90,23 @@
 #endif
 using namespace std;
 typedef long long ll;
+
 void help(set<int>& sus,vector<int>::iterator lb,vector<int>::iterator le,
 					    vector<int>::iterator rb,vector<int>::iterator re){
 	
-	int ls=accumulate(lb,le,0);
-	int rs=accumulate(rb,re,0);
+	int ls=accumulate(lb,le+1,0);
+	int rs=accumulate(rb,re+1,0);
 	sus.insert(ls);
 	sus.insert(rs);
 
-	if(*lb!=*le){
-		int mid=(*le+(*lb))/2;
+	int mid=(*le+(*lb))/2;
+	if(lb!=le&&*lb!=*le){
 		vector<int>::iterator up=upper_bound(lb,le,mid);
 		help(sus,lb,up-1,up,le);
 	}
-
-	if(*rb!=*re){
-		int mid=(*rb+(*re))/2;
+	
+	mid=(*rb+(*re))/2;
+	if(rb!=re&&*rb!=*re){
 		vector<int>::iterator up=upper_bound(rb,re,mid);
 		help(sus,rb,up-1,up,re);
 	}
@@ -120,10 +121,11 @@ void solve(){
 	sort(a.begin(),a.end());
 
 	set<int> sus;
-	int mid=(*(a.end()-1)+(*a.begin()))/2;
+	sus.insert(accumulate(a.begin(),a.end(),0));
+	int mid=((*a.begin())+(*(a.end()-1)))/2;
 	vector<int>::iterator up=upper_bound(a.begin(),a.end(),mid);
 
-	help(sus,a.begin(),up-1,up,a.end());
+	help(sus,a.begin(),up-1,up,a.end()-1);
 
 	for(int j=0;j<q;j++){
 		int s;
@@ -140,12 +142,8 @@ int main() {
 	ios::sync_with_stdio(false), cin.tie(0);
 	int t;
 	cin>>t;
-	while(t--){
+	while(t--)
 		solve();
-	}
-
-	// vector<int> a;
-	// a.push_back(1);
-	// cout<<*(a.end()-3)<<endl;
+	
     return 0;
 }
