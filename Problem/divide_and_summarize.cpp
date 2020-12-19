@@ -1,6 +1,8 @@
 /***
   $1600 brute force
   https://codeforces.com/contest/1461/problem/D
+  There is a run-time error. A possible way to fix it would to run recursion help function backwards:
+  compute the subsequence elements first and then add the elements together.
 ***/
 
 #ifndef _GLIBCXX_NO_ASSERT
