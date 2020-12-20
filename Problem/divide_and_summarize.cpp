@@ -1,5 +1,5 @@
 /***
-  $1600 Brute Force Recursion
+  $1600 Brute Force Recursion Pointer Arithmatic
   https://codeforces.com/contest/1461/problem/D
   The Run-Time error is fixed by changing the recursion structure.
   The Insert function runs backwards and the computation complexity is thus minizied:
