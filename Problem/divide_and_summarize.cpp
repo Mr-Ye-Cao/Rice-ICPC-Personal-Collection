@@ -1,8 +1,10 @@
 /***
-  $1600 brute force
+  $1600 Brute Force Recursion
   https://codeforces.com/contest/1461/problem/D
-  There is a run-time error. A possible way to fix it would to run recursion help function backwards:
-  compute the subsequence elements first and then add the elements together.
+  The Run-Time error is fixed by changing the recursion structure.
+  The Insert function runs backwards and the computation complexity is thus minizied:
+  All of the additions of array is least overlapped by computing the subsequence elements first 
+  and then add the elements together.
 ***/
 
 #ifndef _GLIBCXX_NO_ASSERT
@@ -93,41 +95,35 @@
 using namespace std;
 typedef long long ll;
 
-void help(set<int>& sus,vector<int>::iterator lb,vector<int>::iterator le,
-					    vector<int>::iterator rb,vector<int>::iterator re){
+ll helper(set<ll>& sus,vector<ll>::iterator be,vector<ll>::iterator en){
+	// unseperable
+	if((*be)==(*en))
+		return accumulate(be,en+1,0);
 	
-	int ls=accumulate(lb,le+1,0);
-	int rs=accumulate(rb,re+1,0);
-	sus.insert(ls);
-	sus.insert(rs);
+	ll mid=((*be)+(*en))/2;
+	vector<ll>::iterator mip=upper_bound(be,en+1,mid);
+	ll les=helper(sus,be,mip-1);
+	ll ris=helper(sus,mip,en);
+	sus.insert(les);
+	sus.insert(ris);
+	sus.insert(les+ris);
 
-	int mid=(*le+(*lb))/2;
-	if(lb!=le&&*lb!=*le){
-		vector<int>::iterator up=upper_bound(lb,le,mid);
-		help(sus,lb,up-1,up,le);
-	}
-	
-	mid=(*rb+(*re))/2;
-	if(rb!=re&&*rb!=*re){
-		vector<int>::iterator up=upper_bound(rb,re,mid);
-		help(sus,rb,up-1,up,re);
-	}
+	return les+ris;
 }
 
 void solve(){
 	int n,q;
 	cin>>n>>q;
-	vector<int> a(n);
+	vector<ll> a(n);
 	for(int i=0;i<n;i++)
 		cin>>a[i];
 	sort(a.begin(),a.end());
 
-	set<int> sus;
-	sus.insert(accumulate(a.begin(),a.end(),0));
-	int mid=((*a.begin())+(*(a.end()-1)))/2;
-	vector<int>::iterator up=upper_bound(a.begin(),a.end(),mid);
-
-	help(sus,a.begin(),up-1,up,a.end()-1);
+	set<ll> sus;
+	if(a[0]!=a[n-1])
+		helper(sus,a.begin(),a.end()-1);
+	else
+		sus.insert(a[0]*n);
 
 	for(int j=0;j<q;j++){
 		int s;
