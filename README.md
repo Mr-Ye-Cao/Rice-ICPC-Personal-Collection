@@ -1,4 +1,4 @@
-# Rice_icpc_club
+# Rice ICPC Club Personal Collection
 
 
 Disclaimer: This repository is for the sake of systematically classifying and storing solutions of ICPC exam practices. 
